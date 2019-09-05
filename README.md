@@ -71,7 +71,7 @@ if (!$isAllowed($relativePath, $allowedResources)) {
     /* Customization by MagePsycho - Start */
     try {
         $absoluteFilePath = BP . '/pub/' . $relativePath;
-        $absoluteFileUrl = 'https://statics.citrusstv.com/' . $relativePath;
+        $absoluteFileUrl = '{your-live-url}/' . $relativePath;
         $absoluteFileDir = dirname($absoluteFilePath);
         if (!is_dir($absoluteFileDir)) {
             mkdir($absoluteFileDir, 777, true);
@@ -85,3 +85,4 @@ if (!$isAllowed($relativePath, $allowedResources)) {
     /* Customization by MagePsycho - End */
 }
 ```
+Now your homepage will also look cool!
