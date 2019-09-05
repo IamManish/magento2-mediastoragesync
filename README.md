@@ -54,3 +54,34 @@ Enable: Enable or disable the functionality
 URL: Configure the source URL where to retrieve the images (e.g. "https://magento.com/")
 
 optionally configure credentials for BasicAuth.
+
+### How to download wysiwyg images?
+Since wysiwyg images are dispatched via `./pub/get.php`, you can modify the code as shown below.
+
+Find the following code in file `./pub/get.php`
+```
+if (!$isAllowed($relativePath, $allowedResources)) {
+    require_once 'errors/404.php';
+    exit;
+}
+```
+And replace by the chunk below
+```
+if (!$isAllowed($relativePath, $allowedResources)) {              
+    /* Customization by MagePsycho - Start */
+    try {
+        $absoluteFilePath = BP . '/pub/' . $relativePath;
+        $absoluteFileUrl = 'https://statics.citrusstv.com/' . $relativePath;
+        $absoluteFileDir = dirname($absoluteFilePath);
+        if (!is_dir($absoluteFileDir)) {
+            mkdir($absoluteFileDir, 777, true);
+        }
+        file_put_contents($absoluteFilePath, file_get_contents(trim($absoluteFileUrl)));
+        file_put_contents(BP . '/log/download-image.log', $absoluteFilePath . ' -> ' . $absoluteFileUrl, FILE_APPEND | LOCK_EX);
+    } catch (Exception $e) {
+        require_once 'errors/404.php';
+        exit;
+    }
+    /* Customization by MagePsycho - End */
+}
+```
