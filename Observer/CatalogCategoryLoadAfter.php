@@ -17,7 +17,7 @@ use Phoenix\MediaStorageSync\Model\Sync;
 use Phoenix\MediaStorageSync\Model\Config;
 use Phoenix\MediaStorageSync\Helper\Data as Helper;
 
-class CategoryObserver implements ObserverInterface
+class CatalogCategoryLoadAfter implements ObserverInterface
 {
     protected $sync;
     protected $configModel;
